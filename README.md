@@ -1,381 +1,235 @@
-# whiteglass
+# Pixyll
 
-[![Gem Version](https://badge.fury.io/rb/jekyll-whiteglass.svg)](https://badge.fury.io/rb/jekyll-whiteglass)
-[![CircleCI](https://circleci.com/gh/yous/whiteglass/tree/master.svg?style=shield)](https://circleci.com/gh/yous/whiteglass/tree/master)
+[pixyll.com](https://www.pixyll.com/)
 
-Minimal, responsive Jekyll theme for hackers.
+![Pixyll screenshot](./screenshot.png)
 
-![whiteglass theme](screenshot.png)
+Pixyll is a simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff. It's mobile _first_, fluidly responsive, and delightfully lightweight.
 
-## Installation
+It's pretty minimal, but leverages large type and drastic contrast to make a statement, on all devices.
 
-Add this line to your Jekyll site's Gemfile:
+This Jekyll theme was crafted with <3 by [John Otander](https://johno.com/)
+([@4lpine](https://twitter.com/4lpine)).
 
-``` ruby
-gem "jekyll-whiteglass"
+中文版 <https://github.com/ee0703/pixyll-zh-cn>.
+
+## Getting Started
+
+If you're completely new to Jekyll, I recommend checking out the documentation at <https://jekyllrb.com/> or there's a tutorial by [Smashing Magazine](https://www.smashingmagazine.com/2014/08/build-blog-jekyll-github-pages/).
+
+```
+$ git clone git@github.com:johno/pixyll.git
+$ cd pixyll
+$ gem install bundler # If you don't have bundler installed
+$ bundle install
 ```
 
-And add this line to your Jekyll site's `_config.yml`:
+#### Verify your Jekyll version
 
-``` yaml
-theme: jekyll-whiteglass
+It's important to also check your version of Jekyll since this project uses new `baseurl` features that are [only supported in 3.3+](https://jekyllrb.com/news/2016/10/06/jekyll-3-3-is-here/).
+
+### Fork, then clone
+
+Fork the repo, and then clone it so you've got the code locally.
+
+
+### Modify the `_config.yml`
+
+The `_config.yml` located in the root of the Pixyll directory contains all of the configuration details
+for the Jekyll site. The defaults are:
+
+```yml
+# Site settings
+title: Pixyll
+email: your_email@example.com
+author: John Otander
+description: "A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff."
+baseurl: ""
+url: "https://pixyll.com/"
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+paginate: 3
 ```
 
-And then execute:
+### Jekyll Serve
 
-``` sh
-bundle
+Then, start the Jekyll Server. I always like to give the `--watch` option so it updates the generated HTML when I make changes.
+
+```
+$ jekyll serve --watch
 ```
 
-Or install it yourself as:
+Now you can navigate to `localhost:4000` in your browser to see the site.
 
-``` sh
-gem install jekyll-whiteglass
+### Using Github Pages
+
+You can host your Jekyll site for free with Github Pages. [Click here](https://pages.github.com/) for more information.
+
+#### A configuration tweak if you're using a gh-pages sub-folder
+
+In addition to your github-username.github.io repo that maps to the root url, you can serve up sites by using a gh-pages branch for other repos so they're available at github-username.github.io/repo-name.
+
+This will require you to modify the `_config.yml` like so:
+
+```yml
+# Site settings
+title: Repo Name
+email: your_email@example.com
+author: John Otander
+description: "Repo description"
+baseurl: "/repo-name"
+url: "https://github-username.github.io"
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+paginate: 3
 ```
 
-## Quick Start
+This will ensure that the the correct relative path is constructed for your assets and posts. Also, in order to run the project locally, you will need to specify the blank string for the baseurl: `$ jekyll serve --baseurl ''`.
 
-1. Go to [yous/whiteglass-template](https://github.com/yous/whiteglass-template).
-2. Click "Use this template" button, and then create a repository.
-3. Change the options defined in _config.yml. See [Configuration](https://github.com/yous/whiteglass-template#configuration)
-   section under whiteglass-template.
-4. Push some content, then GitHub Actions will generate the site.
+##### If you don't want the header to link back to the root url
 
-## Manual Setup
+You will also need to tweak the header include `/{{ site.baseurl }}`:
 
-1. Generate a new Jekyll blog:
-
-   ``` sh
-   jekyll new blog --skip-bundle
-   cd blog
-   ```
-
-2. Edit `Gemfile` to use whiteglass theme:
-
-   ``` ruby
-   gem "jekyll-whiteglass"
-   ```
-
-3. Edit `_config.yml` to use whiteglass theme and its plugins:
-
-   ``` yaml
-   theme: jekyll-whiteglass
-   plugins:
-     - jekyll-archives
-     - jekyll-paginate
-     - jekyll-sitemap
-
-   permalink: /:year/:month/:day/:title/
-   paginate_path: /posts/:num/
-   paginate: 5
-
-   jekyll-archives:
-     enabled:
-       - categories
-       - tags
-     layout: category_archives
-     permalinks:
-       category: /categories/:name/
-       tag: /tags/:name/
-   ```
-
-4. Copy
-   [`index.html`](https://github.com/yous/whiteglass/blob/master/index.html),
-   [`about.md`](https://github.com/yous/whiteglass/blob/master/about.md),
-   [`archives.md`](https://github.com/yous/whiteglass/blob/master/archives.md),
-   [`feed.xml`](https://github.com/yous/whiteglass/blob/master/feed.xml),
-   [`robots.txt`](https://github.com/yous/whiteglass/blob/master/robots.txt),
-   [`_data/i18n.yml`](https://github.com/yous/whiteglass/blob/master/_data/i18n.yml),
-   and [`_data/navigation.yml`](https://github.com/yous/whiteglass/blob/master/_data/navigation.yml)
-   from the theme:
-
-   ``` sh
-   rm index.md
-   curl -L -O "https://github.com/yous/whiteglass/raw/master/{index.html,about.md,archives.md,feed.xml,robots.txt}"
-   curl -L --create-dirs -o _data/#1 "https://github.com/yous/whiteglass/raw/master/_data/{navigation.yml,i18n.yml}"
-   ```
-
-5. Install gems and you're good to go! The blog will be available on
-   `http://127.0.0.1:4000`.
-
-   ``` sh
-   bundle install
-   bundle exec jekyll serve
-   ```
-
-## Upgrading
-
-### From Versions < 1.9.1
-
-Copy
-[`_data/i18n.yml`](https://github.com/yous/whiteglass/blob/master/_data/i18n.yml)
-from the theme.
-
-## Deployment to GitHub Pages using Travis CI
-
-This theme uses [jekyll-archives](https://github.com/jekyll/jekyll-archives) gem
-which is [not supported by GitHub Pages](https://help.github.com/articles/configuring-jekyll-plugins/).
-If you want to use full features like categories and tags, I recommend you to
-use Travis CI or other CI services.
-
-To deploy using Travis CI, first copy the [`.travis.yml`](https://github.com/yous/whiteglass/blob/master/.travis.yml)
-of this repository. You can change `target-branch` (`gh-pages` by default) and
-`on.branch` (`master` by default) as you want. If you want further
-customization, see [Travis CI's documentation page](https://docs.travis-ci.com/user/deployment/pages/).
-
-You'll see there's `github-token: $GITHUB_TOKEN`, and this is what you should
-configure. Go to your [personal access tokens](https://github.com/settings/tokens)
-page, and generate new token with `public_repo` or `repo` permission as you
-need. Then go to Travis CI's settings page of your repository, and add a new
-environment variable `GITHUB_TOKEN` with the value of the token you generated.
-
-## Usage
-
-### Customization
-
-To override the default structure and style of whiteglass, simply create the
-concerned directory at the root of your site, copy the file you wish to
-customize to that directory, and then edit the file. e.g., to override the
-[`_includes/footer_content.html`](_includes/footer_content.html) file to add
-contents to footer, create an `_includes` directory, copy
-`_includes/footer_content.html` from jekyll-whiteglass gem folder to
-`<your-site>/_includes` and start editing that file.
-
-For example, you can add favicons to `_includes/head_custom.html`:
-
-``` html
-<link rel="icon" type="image/x-icon" href="{{ "/favicon.ico" | relative_url }}">
-<link rel="apple-touch-icon" href="{{ "/apple-touch-icon.png" | relative_url }}">
-<link rel="apple-touch-icon" sizes="76x76" href="{{ "/apple-touch-icon-76x76.png" | relative_url }}">
-<link rel="apple-touch-icon" sizes="120x120" href="{{ "/apple-touch-icon-120x120.png" | relative_url }}">
-<link rel="apple-touch-icon" sizes="152x152" href="{{ "/apple-touch-icon-152x152.png" | relative_url }}">
-<link rel="apple-touch-icon" sizes="180x180" href="{{ "/apple-touch-icon-180x180.png" | relative_url }}">
+```html
+<header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="{{ "/" | relative_url }}" class="site-title">{{ site.title }}</a>
+      <nav class="site-nav">
+        {% include navigation.html %}
+      </nav>
+    </div>
+  </div>
+</header>
 ```
 
-The site's default CSS is in the gem itself,
-[`assets/main.scss`](assets/main.scss). To override the default CSS, the file
-has to exist at your site source. Do either of the following:
+A relevant Jekyll Github Issue: <https://github.com/jekyll/jekyll/issues/332>
 
-- Create a new instance of `main.scss` at site source
-  - Create a new file `main.scss` at `<your-site>/assets/`
-  - Add the frontmatter dashes, and
-  - Add `@import "whiteglass";`, to `<your-site>/assets/main.scss`
-  - Add your custom CSS
-- Download the file from this repo
-  - Create a new file `main.scss` at `<your-site>/assets/`
-  - Copy the contents at [`assets/main.scss`](assets/main.scss) onto the `main.scss` you just created, and edit away
-- Copy directly from jekyll-whiteglass gem
-  - Go to your local jekyll-whiteglass gem installation directory (run `bundle show jekyll-whiteglass` to get the path to it)
-  - Copy the `assets/` folder from there into the root of `<your-site>`
-  - Change whatever values you want, inside `<your-site>/assets/main.scss`
+### Contact Form
 
-### Locale
+The contact form uses <https://formspree.io/>. It will require you to fill the form out and submit it once, before going live, to confirm your email.
 
-`site.lang` is used to declare the primary language for each web page within the
-site.
+More setup instructions and advanced options can be found at [https://formspree.io](https://formspree.io/)
 
-`lang: en-US` sets the `lang` attribute for the site to the United States flavor
-of English, while `en-GB` would be for the United Kingdom style of English.
-Country codes are optional and the shorter variation `lang: en` is also
-acceptable. You may want to write a post in different language, then add `lang`
-attribute to the frontmatter of that post:
 
-``` yaml
-layout: post
-title: "안녕하세요"
-lang: ko
+### Disqus
+
+To configure Disqus, set up a [Disqus site](https://disqus.com/admin/create/) with the same name as your site. Then, in `_config.yml`, edit the `disqus_shortname` value to enable Disqus.
+
+### Customizing the CSS
+
+All variables can be found in the `_sass/_variables.scss` file, toggle these as you'd like to change the look and feel of Pixyll.
+
+### Page Animation
+
+If you would like to add a [fade-in-down effect](https://animate.style/), you can add `animated: true` to your `_config.yml`.
+
+### AnchorJS
+
+[AnchorJS](https://github.com/bryanbraun/anchorjs): _A JavaScript utility for adding deep anchor links to existing page content. AnchorJS is lightweight, accessible, and has no dependencies._ You can turn it on by toggling `enable_anchorjs`. Because it offers many ways for customization, tweaks should be done in `_includes/footer.html`. Default settings after turning AnchorJS on are:
+
+```html
+<script>
+    anchors.options.visible = 'always';
+    anchors.add('article h2, article h3, article h4, article h5, article h6');
+</script>
 ```
 
-The date format and other fixed strings are translated using the `_data/i18n.yml` file. If your language is not yet included, feel free to open a [pull request](https://github.com/yous/whiteglass/pulls).
+See [documentation](https://www.bryanbraun.com/anchorjs/#basic-usage) for more options.
 
-### Description
+### Put in a Pixyll Plug
 
-`site.description` describes the site. This is mainly used in meta descriptions
-for improving SEO. Also, you can set `description` attribute for each post:
+If you want to give credit to the Pixyll theme with a link to <https://pixyll.com/> or my personal website <https://johno.com/> somewhere, that'd be awesome. No worries if you don't.
 
-``` yaml
-layout: post
-title: Awesome Post
-description: This is an awesome post.
+### Web analytics and search engines
+
+You can measure visits to your website either by using [Google Analytics](https://www.google.com/analytics/) tracking embed or the more advanced [Google Tag Manager](https://www.google.com/analytics/tag-manager/) container.
+* For Google Analytics set up the value for `google_analytics`, it should be something like `google_analytics: UA-XXXXXXXX-X`.
+* For Google Tag Manager set up the value for `google_tag_manager`, it should be something like: `google_tag_manager: GTM-XXXXX`.
+* _Do not_ set both of above methods because this will cause conflicts and skew your reporting data.
+* Remember that you need to properly configure the GTM container in its admin panel if you want it to work. More info is available in [GTM's docs](https://www.google.com/analytics/tag-manager/resources/).
+
+Your website is, by default, set to be allowed for crawling and indexing by search engines. (Unless you made yourself a custom robots.txt file). You can use front matter settings on each page to control how search engines will it. Sometimes you may want to exclude a particular page from indexing or forbid Google to store a copy of your page in its cache. It is up to you. Use the `meta_robots` frontmatter key and assign values based on [this table](https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag?hl=en#valid-indexing--serving-directives). Some examples:
+
+```yaml
+# exclude page from index
+meta_robots: noindex
+
+# allow indexing, disallow caching
+meta_robots: noarchive
+
+# allow indexing, disallow crawling links
+meta_robots: nofollow
+
+# disallow indexing, follow links
+meta_robots: noindex,follow
 ```
 
-If you don't specify `post.description`, then `post.excerpt` will be used if it
-exist.
+In order to get more information about your website's status in search engines, you can register it in [Google Search Console](https://search.google.com/search-console/about) and/or [Bing Webmaster Tools](https://www.bing.com/webmasters/about). Both these tools will ask you to authorize your website with them and there are couple of ways to do that. Pixyll supports verification via meta tags - just fill in values for `google_verification` and/or `bing_verification` in `_config.yml`, the verification strings and meta tags will then be added automatically.
 
-### External URL
+If search engine optimization is your thing, you can also set up `meta_description` values for each page/post. By default Pixyll uses `summary` to populate the `<meta name="description" content="...">` tag and falls back to `description` from `_config.yml` if `summary` is not present in page/post's front matter. The `summary` is also used for generating Open Graph tags. Why would you want to use a dedicated variable for meta description? Because character limit to properly display this description in search results (as a snippet) is way smaller than in Open Graph. It is recommended to keep it at 155-160 characters, for more in-depth info read [this article](https://moz.com/blog/i-cant-drive-155-meta-descriptions-in-2015).
 
-`external-url` turns the title of your post to a link. Specify a URL which you
-want to link to.
+And lastly - if you happen to write in language other than English be sure to change `og_locale` in `_config.yml` to reflect it.
 
-``` yaml
-layout: post
-title: Jekyll whiteglass theme
-external-url: https://github.com/yous/whiteglass
+### Progressive Web App
+
+Pixyll supports features of a progressive web app (PWA).  As a PWA, your site's home page can be installed as a shortcut or an app icon on a mobile device.  Also, certain assets are cached so the site can be accessed should the device be offline from the network.
+
+Pixyll supports these features because it provides a Javascript file that acts as a *service worker* in the browser and has a JSON file with a *web manifest*.  By default, these are configured to the settings of Pixyll, but you should consider cutomizing them to your specific site:
+
+1. Provide a different version of `splash-512x512.png` which is the loading screen for your offline app.
+2. A `favicon-192x192.png` for the app icon (if you haven't already).
+3. In `sw.js`, list any other files or pages you want to add to the list of cached artifacts.
+
+For more information on PWAs:
+
+- https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps
+- https://web.dev/what-are-pwas/
+
+### Enjoy
+
+I hope you enjoy using Pixyll. If you encounter any issues, please feel free to let me know by creating an [issue](https://github.com/johno/pixyll/issues). I'd love to help.
+
+## Upgrading Pixyll
+
+Pixyll is always being improved by its users, so sometimes one may need to upgrade.
+
+#### Ensure there's an upstream remote
+
+If `git remote -v` doesn't have an upstream listed, you can do the following to add it:
+
+```
+git remote add upstream https://github.com/johno/pixyll.git
 ```
 
-Then the title of your post would look like a link with text
-`Jekyll whiteglass theme →`. This also applies to your blog feed.
+#### Pull in the latest changes
 
-### Category
-
-Each post can have `categories` attribute. It can be a string or an array. This
-will be displayed on index, archive and each post, and provide a link to the
-archive of category.
-
-``` yaml
-layout: post
-title: Awesome Post
-categories: Misc
+```
+git pull upstream master
 ```
 
-``` yaml
-layout: post
-title: Another Awesome Post
-categories:
-  - Misc
-  - Idea
-```
+There may be merge conflicts, so be sure to fix the files that git lists if they occur. That's it!
 
-### Tag
+## Thanks to the following
 
-Each post can have `tags` attribute. It can be a string or an array. This will
-be displayed on index, archive and each post, and provide a link to the archive
-of tag.
-
-``` yaml
-layout: post
-title: Awesome Post
-tags: food
-```
-
-``` yaml
-layout: post
-title: Another Awesome Post
-tags:
-  - food
-  - trip
-```
-
-### Feed
-
-Create `<your-site>/feed.xml` with:
-
-``` yaml
----
-layout: feed
----
-```
-
-If you want to use another path for feed, you can specify a non-default path via
-your site's config.
-
-``` yaml
-feed:
-  path: atom.xml
-```
-
-Then create `<your-site>/atom.xml` with the same content of `feed.xml` above.
-
-### Comments
-
-whiteglass provides the ability to include your favourite commenting service, like [Disqus](https://disqus.com) or [Isso](https://posativ.org/isso).
-
-To enable comments on pages and posts:
-1. Overwrite the `_includes/custom_comments_provider.html` with your custom provider of comments.
-2. Add `comments: true` to your `_config.yml`.
-
-To disable comments on certain pages or posts specify `comments: false` in the front matter of the page or post.
-
-### Metadata for SEO
-
-#### Keywords
-
-Each post can have `keywords` attribute. This is a comma-separated list which is
-used in meta descriptions for improving SEO.
-
-``` yaml
-layout: post
-title: How to configure jekyll-whiteglass
-keywords: jekyll, whiteglass, github pages
-```
-
-YAML list is also available:
-
-``` yaml
-keywords:
-  - jekyll
-  - whiteglass
-  - github pages
-```
-
-#### Twitter
-
-- `site.twitter_username` sets `twitter:site` and `twitter:creator` meta tag
-- `site.twitter_image` sets `twitter:image:src` meta tag
-- `page.twitter_card.type` sets `twitter:card` meta tag (default: `summary`)
-  - If `page.twitter_card.type` is `gallery`, it sets `twitter:image0`, `twitter:image1`, `twitter:image2` and `twitter:image3` meta tags with `page.twitter_card.image`, `page.twitter_card.image1`, `page.twitter_card.image2` and `page.twitter_card.image3`, respectively
-  - If `page.twitter_card.type` is `photo`, `page.twitter_card.width` sets `twitter:image:width` meta tag and `page.twitter_card.height` sets `twitter:image:height` meta tag
-- `page.twitter_card.creator` sets `twitter:creator` meta tag. It overrides `site.twitter_username`
-- `page.twitter_card.image` sets `twitter:image:src` meta tag if `page.twitter_card.type` is not `gallery`. It overrides `site.twitter_image`
-
-#### Facebook
-
-- `site.facebook_app_id` sets `fb:admins` meta tag
-- `site.facebook_page` sets `article:author` meta tag
-- `site.facebook_image` sets `og:image` meta tag
-- `page.facebook.image` sets `og:image` meta tag. It overrides `site.facebook_image`
-
-### Navigation
-
-To define header links, add titles and URLs under the `main` key in
-`_data/navigation.yml`:
-
-``` yaml
-main:
-  - title: "About"
-    url: /about/
-  - title: "Archives"
-    url: /archives/
-  - title: "GitHub"
-    url: https://github.com/yous/whiteglass
-```
-
-### Enabling Google Analytics
-
-To enable Google Analytics, add the following lines to your Jekyll site:
-
-``` yaml
-google_analytics: UA-NNNNNNNN-N
-```
-
-For Google Analytics 4, add the following lines:
-
-``` yaml
-google_analytics: G-NNNNNNNNNN
-```
-
-Replace `N`s with your specific ID.
+* [BASSCSS](https://basscss.com/)
+* [Jekyll](https://jekyllrb.com/)
+* [Refills](https://refills.bourbon.io/)
+* [Solarized](https://ethanschoonover.com/solarized/)
+* [Animate.css](https://animate.style/)
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at
-<https://github.com/yous/whiteglass>. This project is intended to be a safe,
-welcoming space for collaboration, and contributors are expected to adhere to
-the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
 
-## Development
+## Forking
 
-To set up your environment to develop this theme, run `bundle install`.
-
-Your theme is setup just like a normal Jekyll site! To test your theme, run
-`bundle exec jekyll serve` and open your browser at
-`http://localhost:4000/whiteglass/`. This starts a Jekyll server using your
-theme. Add pages, documents, data, etc. like normal to test your theme's
-contents. As you make modifications to your theme and to your content, your site
-will regenerate and you should see the changes in the browser after a refresh,
-just like normal.
-
-## License
-
-The theme is available as open source under the terms of the
-[MIT License](http://opensource.org/licenses/MIT).
+There is a [guide to forking Pixyll](https://pixyll.com/jekyll/pixyll/2019/01/26/guide-to-forking-pixyll/).
